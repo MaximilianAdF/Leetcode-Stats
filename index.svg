@@ -56,7 +56,7 @@
         }
   </style>
   
-  <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="#fffefe" stroke-opacity="1"></rect>
+  <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="transparent" stroke-opacity="1"></rect>
   <g data-testid="card-title" transform="translate(25, 35)">
       <g transform="translate(0, 0)">
           <text class="header" x="0" y="0" data-testid="header">Maximilian Alvim de Faria's LeetCode Stats</text>
