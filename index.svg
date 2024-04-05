@@ -90,8 +90,76 @@
         <text x="90" y="80" class="stat not_bold" text-anchor="middle" alignment-baseline="middle">Solved</text>
   </g>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        //Define the base API url
+        const API_URL = 'https://leetcode.com/graphql';
+
+        const headers = {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-origin',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0',
+        };
+
+        //Define types for the graphql query and variables
+        const graphqlRequest = async (request) => {
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(request),
+            });
+            return response.json();
+        } catch (error) {
+            throw new Error(String(error));
+        }
+        };
+
+        let problemsSolvedData = null;
+
+        // Make the request to GraphQL
+        graphqlRequest({
+        operationName: 'userProblemsSolved',
+        query: `
+            query userProblemsSolved($username: String!) {
+            allQuestionsCount {
+                difficulty
+                count
+            }
+            matchedUser(username: $username) {
+                problemsSolvedBeatsStats {
+                difficulty
+                percentage
+                }
+                submitStatsGlobal {
+                acSubmissionNum {
+                    difficulty
+                    count
+                }
+                }
+            }
+            }
+        `,
+        variables: {
+            username: 'Makimi'
+        }
+        })
+        .then((data) => {
+            const allQuestionsCount = data.data.allQuestionsCount;
+            const problemsSolvedBeatsStats = data.data.matchedUser.problemsSolvedBeatsStats;
+            const submitStatsGlobal = data.data.matchedUser.submitStatsGlobal.acSubmissionNum;
+
+            problemsSolvedData = {
+            allQuestionsCount,
+            problemsSolvedBeatsStats,
+            submitStatsGlobal
+            };
+
+            console.log(problemsSolvedData);
             // Function to set the length of the solved circle stroke based on percentage with animation
             function setCircleLength(percentage) {
                 var circle = document.querySelector(".solved-circle");
@@ -104,24 +172,24 @@
                     circle.style.strokeDashoffset = offset; // Set strokeDashoffset to desired value
                 }, 50); // Adjust the delay as needed
             }
-
-            // Example usage:
-            var solvedPercentage = 50; // Change this to the desired percentage
+            var solvedPercentage = 50;
             setCircleLength(solvedPercentage);
 
-            // Function to change text when hovering over the circle
-            var totalSolvedText = document.querySelector(".total-solved");
-            var originalText = totalSolvedText.textContent;
+            function checkTextOverflow() {
+                var container = document.querySelector(".header");
+                var containerWidth = container.getBoundingClientRect().width;
 
-            document.querySelector(".solved-circle-rim").addEventListener("mouseenter", function() {
-                // Change text when hovering over the circle
-                totalSolvedText.textContent = "New text"; // Change this to the desired text
-            });
-
-            document.querySelector(".solved-circle-rim").addEventListener("mouseleave", function() {
-                // Restore original text when mouse leaves the circle
-                totalSolvedText.textContent = originalText;
-            });
+                console.log(containerWidth);
+                if (containerWidth > 350) {
+                    var fontSize = Math.floor(100 * (350/containerWidth)); // Adjust 10 according to your preference
+                    container.style.fontSize = fontSize + "%";
+                }
+            }
+            checkTextOverflow();
+        })
+            .catch((error) => {
+                console.log(error);
         });
+    });
     </script>
 </svg>
