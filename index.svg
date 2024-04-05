@@ -5,7 +5,7 @@
   <style>
       .header {
           font: 600 100% 'Segoe UI', Ubuntu, Sans-Serif;
-          fill: #2f80ed;
+          fill: #ffff;
           animation: fadeInAnimation 0.8s ease-in-out forwards; 
       }
 
@@ -19,9 +19,9 @@
           animation: fadeInAnimation 0.3s ease-in-out forwards;
       }
 
-      .rank-text {
+      .total-solved {
           font: 600 24px 'Segoe UI', Ubuntu, Sans-Serif;
-          fill: #2f80ed;
+          fill: #ffff;
           animation: scaleInAnimation 0.3s ease-in-out forwards;
       }
 
@@ -46,38 +46,82 @@
           display: none;
       }
 
-      @keyframes fadeInAnimation {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
+      .solved-circle-rim {
+        z-index: 1;
+        fill: transparent;
+        stroke: #ffff;
+        stroke-width: 3;
+        stroke-linecap: round;
+        opacity: 0.2;
+      }
+
+      .solved-circle {
+        stroke: #FB8C00;
+        stroke-dasharray: 374;
+        stroke-dashoffset: 0;
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+        opacity: 0.8;
+        transform-origin: 90px 55px;
+        transform: rotate(-90deg);
+      }
+      
+        @keyframes fadeInAnimation {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
   </style>
   
-  <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="transparent" stroke-opacity="1"></rect>
+  <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="#151515" stroke-opacity="1"></rect>
   <g data-testid="card-title" transform="translate(25, 35)">
       <g transform="translate(0, 0)">
           <text class="header" x="0" y="0" data-testid="header">Maximilian Alvim de Faria's LeetCode Stats</text>
       </g>
   </g>
-  <g data-testid="main-card-body" transform="translate(0,55)"></g>
+  <g data-testid="main-card-body" transform="translate(0,55)">
+        <circle class="solved-circle" cx="90" cy="55" r="60"/>
+        <circle class="solved-circle-rim" cx="90" cy="55" r="60"/>
+        <text x="90" y="55" class="total-solved not_bold" text-anchor="middle" alignment-baseline="middle">329</text>
+        <text x="90" y="80" class="stat not_bold" text-anchor="middle" alignment-baseline="middle">Solved</text>
+  </g>
 
-  <script>
-      function checkTextOverflow() {
-          var container = document.querySelector(".header");
-          var containerWidth = container.getBoundingClientRect().width;
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to set the length of the solved circle stroke based on percentage with animation
+            function setCircleLength(percentage) {
+                var circle = document.querySelector(".solved-circle");
+                var circumference = Math.PI * 2 * circle.getAttribute("r");
+                var offset = circumference * (1 - percentage / 100);
+                circle.style.strokeDasharray = circumference; // Set strokeDasharray to circumference
+                circle.style.strokeDashoffset = circumference; // Set initial strokeDashoffset to circumference
+                setTimeout(() => {
+                    circle.style.transition = "stroke-dashoffset 1s ease-in-out"; // Add transition
+                    circle.style.strokeDashoffset = offset; // Set strokeDashoffset to desired value
+                }, 50); // Adjust the delay as needed
+            }
 
-          console.log(containerWidth);
-          if (containerWidth > 350) {
-              var fontSize = Math.floor(100 * (350/containerWidth)); // Adjust 10 according to your preference
-              container.style.fontSize = fontSize + "%";
-          
-          }
-      }
-      
-      checkTextOverflow();
-      
-  </script>
+            // Example usage:
+            var solvedPercentage = 50; // Change this to the desired percentage
+            setCircleLength(solvedPercentage);
+
+            // Function to change text when hovering over the circle
+            var totalSolvedText = document.querySelector(".total-solved");
+            var originalText = totalSolvedText.textContent;
+
+            document.querySelector(".solved-circle-rim").addEventListener("mouseenter", function() {
+                // Change text when hovering over the circle
+                totalSolvedText.textContent = "New text"; // Change this to the desired text
+            });
+
+            document.querySelector(".solved-circle-rim").addEventListener("mouseleave", function() {
+                // Restore original text when mouse leaves the circle
+                totalSolvedText.textContent = originalText;
+            });
+        });
+    </script>
 </svg>
