@@ -122,7 +122,7 @@ app.get('/', async (req, res) => {
         .solved-circle {
           stroke: #FB8C00;
           stroke-dasharray: ${Math.PI * 2 * 60};
-          stroke-dashoffset: ${(Math.PI * 2 * 60) * (1 - solvedPercentage / 100)};
+          stroke-dashoffset: ${Math.PI * 2 * 60};
           fill: none;
           stroke-width: 5;
           stroke-linecap: round;
@@ -159,7 +159,7 @@ app.get('/', async (req, res) => {
 
         @keyframes solvedCircleAnimation {
             from {
-                stroke-dashoffset: 0;
+                stroke-dashoffset: ${Math.PI * 2 * 60};
             }
             to {
                 stroke-dashoffset: ${(Math.PI * 2 * 60) * (1 - solvedPercentage / 100)};
@@ -221,49 +221,8 @@ app.get('/', async (req, res) => {
                 <rect class="hard-bar" x="170" y="100" width="220" height="8" rx="4" ry="4"/>
                 <rect class="hard-fill" x="170" y="100" width="${Math.max(220 * (solvedHard/totalHard),4)}" height="8" rx="4" ry="4"/>
           </g> 
-    </g>
-      <script type="module">
-          document.addEventListener("DOMContentLoaded", function() {
-              // Function to set the length of the solved circle stroke based on percentage with animation
-              function setCircleLength(percentage) {
-                  var circle = document.querySelector(".solved-circle");
-                  var circumference = Math.PI * 2 * circle.getAttribute("r");
-                  var offset = circumference * (1 - percentage / 100);
-                  circle.style.strokeDasharray = circumference; // Set strokeDasharray to circumference
-                  circle.style.strokeDashoffset = circumference; // Set initial strokeDashoffset to circumference
-                  setTimeout(() => {
-                      circle.style.transition = "stroke-dashoffset 1s ease-in-out"; // Add transition
-                      circle.style.strokeDashoffset = offset; // Set strokeDashoffset to desired value
-                  }, 50); // Adjust the delay as needed
-              }
-
-              // Example usage:
-              setCircleLength(${solvedPercentage});
-
-              function checkTextOverflow() {
-                  var container = document.querySelector(".header");
-                  var containerWidth = container.getBoundingClientRect().width;
-
-                  console.log(containerWidth);
-                  if (containerWidth > 350) {
-                      var fontSize = Math.floor(100 * (350/containerWidth)); // Adjust 10 according to your preference
-                      container.style.fontSize = fontSize + "%";
-                  }
-              }
-              checkTextOverflow();
-
-              function toggleTextPercentage() {
-                  const element = document.getElementById("total-solved");
-                  console.log(parseInt(element.textContent) === ${solvedCount} ? ${solvedPercentage} + "%" : ${solvedCount});
-                  element.textContent = parseInt(element.textContent) === ${solvedCount} ? ${solvedPercentage} + "%" : ${solvedCount};
-              }
-
-              const intervalId = setInterval(() => {
-                  toggleTextPercentage();
-              }, 10000);
-          });
-      </script>
-  </svg>
+    </g>      
+    </svg>
   `;
 
   res.setHeader('Content-Type', 'image/svg+xml');
