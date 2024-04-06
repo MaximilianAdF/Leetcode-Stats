@@ -1,4 +1,4 @@
-const { default: graphqlRequest } = require("../fetch.js");
+const { default: graphqlRequest } = require("./fetch.js");
 
 const problemsSolvedQuery = `
   query userProblemsSolved($username: String!) {

@@ -1,4 +1,4 @@
-const fetchProblemsData = require('.././leetcode_api/problems_solved/fetch_problems');
+const fetchProblemsData = require('./fetch_problems');
 const express = require('express');
 const app = express();
 const port = 3000;
