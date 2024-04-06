@@ -17,6 +17,10 @@ app.get('/', async (req, res) => {
   var totalMedium = 0;
   var totalHard = 0;
 
+  var beatsEasy = 0;
+  var beatsMedium = 0;
+  var beatsHard = 0;
+
   try {
     const data = await fetchProblemsData(username);
     const number = 100 * data.submitStatsGlobal[0].count / data.allQuestionsCount[0].count;
