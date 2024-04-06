@@ -21,7 +21,7 @@ const problemsSolvedQuery = `
   }
 `;
 
-async function fetchProblemsData(username) {
+module.exports = async function (username) {
     try {
         const request = {
             operationName: "userProblemsSolved",
@@ -44,5 +44,3 @@ async function fetchProblemsData(username) {
         return null;
     }
 }
-
-module.exports = fetchProblemsData;
