@@ -1,0 +1,12 @@
+.solved-circle {
+    stroke: #FB8C00;
+    stroke-dasharray: 374;
+    stroke-dashoffset: 0;
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    opacity: 0.8;
+    transform-origin: 90px 55px;
+    transform: rotate(-90deg);
+    box-shadow: 0 10px 10px 5px #FB8C00;
+}

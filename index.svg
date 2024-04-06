@@ -1,6 +1,7 @@
+
 <svg width="410" height="186" viewBox="0 0 410 186" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
   <title id="titleId">User's Solved Problems, Rank: UserRank</title>
-  <desc id="descId"></desc>
+  <desc id="descId"/>
   
   <style>
       .header {
@@ -41,11 +42,6 @@
           font-weight: 700;
       }
 
-      .icon {
-          fill: #4c71f2;
-          display: none;
-      }
-
       .solved-circle-rim {
         z-index: 1;
         fill: transparent;
@@ -77,7 +73,7 @@
         }
   </style>
   
-  <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="#151515" stroke-opacity="1"></rect>
+  <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="#151515" stroke-opacity="1"/>
   <g data-testid="card-title" transform="translate(25, 35)">
       <g transform="translate(0, 0)">
           <text class="header" x="0" y="0" data-testid="header">Maximilian Alvim de Faria's LeetCode Stats</text>
@@ -86,80 +82,11 @@
   <g data-testid="main-card-body" transform="translate(0,55)">
         <circle class="solved-circle" cx="90" cy="55" r="60"/>
         <circle class="solved-circle-rim" cx="90" cy="55" r="60"/>
-        <text x="90" y="55" class="total-solved not_bold" text-anchor="middle" alignment-baseline="middle">329</text>
+        <text x="90" y="55" id="total-solved" class="total-solved not_bold" text-anchor="middle" alignment-baseline="middle">331</text>
         <text x="90" y="80" class="stat not_bold" text-anchor="middle" alignment-baseline="middle">Solved</text>
   </g>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        //Define the base API url
-        const API_URL = 'https://leetcode.com/graphql';
-
-        const headers = {
-        'Content-Type': 'application/json',
-        'Accept': '*/*',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Sec-Fetch-Dest': 'empty',
-        'Sec-Fetch-Mode': 'cors',
-        'Sec-Fetch-Site': 'same-origin',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0',
-        };
-
-        //Define types for the graphql query and variables
-        const graphqlRequest = async (request) => {
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(request),
-            });
-            return response.json();
-        } catch (error) {
-            throw new Error(String(error));
-        }
-        };
-
-        let problemsSolvedData = null;
-
-        // Make the request to GraphQL
-        graphqlRequest({
-        operationName: 'userProblemsSolved',
-        query: `
-            query userProblemsSolved($username: String!) {
-            allQuestionsCount {
-                difficulty
-                count
-            }
-            matchedUser(username: $username) {
-                problemsSolvedBeatsStats {
-                difficulty
-                percentage
-                }
-                submitStatsGlobal {
-                acSubmissionNum {
-                    difficulty
-                    count
-                }
-                }
-            }
-            }
-        `,
-        variables: {
-            username: 'Makimi'
-        }
-        })
-        .then((data) => {
-            const allQuestionsCount = data.data.allQuestionsCount;
-            const problemsSolvedBeatsStats = data.data.matchedUser.problemsSolvedBeatsStats;
-            const submitStatsGlobal = data.data.matchedUser.submitStatsGlobal.acSubmissionNum;
-
-            problemsSolvedData = {
-            allQuestionsCount,
-            problemsSolvedBeatsStats,
-            submitStatsGlobal
-            };
-
-            console.log(problemsSolvedData);
+    <script type="module">
+        document.addEventListener("DOMContentLoaded", function() {
             // Function to set the length of the solved circle stroke based on percentage with animation
             function setCircleLength(percentage) {
                 var circle = document.querySelector(".solved-circle");
@@ -172,7 +99,9 @@
                     circle.style.strokeDashoffset = offset; // Set strokeDashoffset to desired value
                 }, 50); // Adjust the delay as needed
             }
-            var solvedPercentage = 50;
+
+            // Example usage:
+            var solvedPercentage = 0; // Change this to the desired percentage
             setCircleLength(solvedPercentage);
 
             function checkTextOverflow() {
@@ -186,10 +115,15 @@
                 }
             }
             checkTextOverflow();
-        })
-            .catch((error) => {
-                console.log(error);
+
+            function toggleTextPercentage(solvedPercentage, solvedCount) {
+                const element = document.getElementById("total-solved");
+                element.textContent = element.textContent === solvedCount ? solvedPercentage + "%" : solvedCount;
+            }
+
+            const intervalId = setInterval(() => {
+                toggleTextPercentage(${solvedPercentage}, ${solvedCount});
+            }, 5000);
         });
-    });
     </script>
 </svg>
