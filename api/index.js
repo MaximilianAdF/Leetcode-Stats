@@ -89,6 +89,14 @@ app.get('/', async (req, res) => {
             animation: scaleInAnimation 0.5s ease-in-out forwards;
         }
 
+        .text1 {
+            animation: animateText1 10s ease-in-out forwards infinite;
+        }
+
+        .text2 {
+            animation: animateText2 10s ease-in-out forwards infinite;
+        }
+
         .rank-percentile-header {
             font-size: 14px;
         }
@@ -156,6 +164,21 @@ app.get('/', async (req, res) => {
             fill: #EF4743;
         }
         
+        @keyframes animateText1 {
+            0% { opacity: 1; } /* Start fully opaque */
+            49% { opacity: 1; } /* Maintain opacity for half duration */
+            50% { opacity: 0; } /* Switch to transparent at midpoint */
+            99% { opacity: 0; } /* Stay transparent for remaining duration */
+            100% { opacity: 1; } /* Back to fully opaque at the end */
+          }
+          
+          @keyframes animateText2 {
+            0% { opacity: 0; } /* Start transparent */
+            49% { opacity: 0; } /* Stay transparent for half duration */
+            50% { opacity: 1; } /* Switch to opaque at midpoint */
+            99% { opacity: 1; } /* Maintain opacity for remaining duration */
+            100% { opacity: 0; } /* Back to transparent at the end */
+          }
 
         @keyframes solvedCircleAnimation {
             from {
@@ -195,7 +218,8 @@ app.get('/', async (req, res) => {
     <g data-testid="main-card-body" transform="translate(0,55)">
           <circle class="solved-circle" cx="90" cy="55" r="60"/>
           <circle class="solved-circle-rim" cx="90" cy="55" r="60"/>
-          <text x="90" y="55" id="total-solved" class="total-solved not_bold" text-anchor="middle" alignment-baseline="middle">${solvedCount}</text>
+          <text x="90" y="55" id="total-solved" class="total-solved text1 not_bold" text-anchor="middle" alignment-baseline="middle">${solvedCount}</text>
+          <text x="90" y="55" class="total-solved text2 not_bold" text-anchor="middle" alignment-baseline="middle" opacity="0">${solvedPercentage}%</text> 
           <text x="90" y="80" class="stat not_bold" text-anchor="middle" alignment-baseline="middle">Solved</text>
 
           <g class="bars" transform="translate(0, 0)">
