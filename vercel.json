@@ -1,1 +1,15 @@
-{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/api" }] }
+{ 
+    "version": 2, 
+    "functions": {
+        "api/*.js": {
+            "memory": 128,
+            "maxDuration": 10
+        }
+    },
+    "rewrites": [
+        { 
+        "source": "/", 
+        "destination": "https://github.com/anuraghazra/leetcode-stats"
+        }
+    ] 
+}

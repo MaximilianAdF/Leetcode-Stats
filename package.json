@@ -2,10 +2,10 @@
     "name": "user-stats-svg",
     "version": "1.0.0",
     "description": "A simple SVG component to display user stats",
-    "main": "./api/index.js",
+    "main": "./api/index.ts",
     "scripts": {
-        "dev": "node index.js",
-        "start": "node index.js"
+        "dev": "node index.ts",
+        "start": "node index.ts"
     },
     "dependencies": {
         "express": "^4.18.2",
