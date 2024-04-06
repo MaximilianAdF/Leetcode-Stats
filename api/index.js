@@ -122,14 +122,14 @@ app.get('/', async (req, res) => {
         .solved-circle {
           stroke: #FB8C00;
           stroke-dasharray: ${Math.PI * 2 * 60};
-          stroke-dashoffset: ${(Math.PI * 2 * 60) * (1 - solvedPercentage / 100)};
+          stroke-dashoffset: 0;
           fill: none;
           stroke-width: 5;
           stroke-linecap: round;
           opacity: 0.8;
           transform-origin: 90px 55px;
           transform: rotate(-90deg);
-          circle.style.transition = "stroke-dashoffset 1s ease-in-out"
+          animation: solvedCircleAnimation 1s ease-in-out forwards;
         }
 
         .easy-bar {
@@ -154,6 +154,16 @@ app.get('/', async (req, res) => {
 
         .hard-fill {
             fill: #EF4743;
+        }
+        
+
+        @keyframes solvedCircleAnimation {
+            from {
+                stroke-dashoffset: 0;
+            }
+            to {
+                stroke-dashoffset: ${(Math.PI * 2 * 60) * (1 - solvedPercentage / 100)};
+            }
         }
         
 
