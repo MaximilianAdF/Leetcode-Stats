@@ -122,7 +122,7 @@ app.get('/', async (req, res) => {
         .solved-circle {
           stroke: #FB8C00;
           stroke-dasharray: ${Math.PI * 2 * 60};
-          stroke-dashoffset: 0;
+          stroke-dashoffset: ${(Math.PI * 2 * 60) * (1 - solvedPercentage / 100)};
           fill: none;
           stroke-width: 5;
           stroke-linecap: round;
