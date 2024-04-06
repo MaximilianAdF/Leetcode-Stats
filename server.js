@@ -229,7 +229,6 @@ app.get('/', async (req, res) => {
                   var container = document.querySelector(".header");
                   var containerWidth = container.getBoundingClientRect().width;
 
-                  console.log(containerWidth);
                   if (containerWidth > 350) {
                       var fontSize = Math.floor(100 * (350/containerWidth)); // Adjust 10 according to your preference
                       container.style.fontSize = fontSize + "%";
@@ -254,5 +253,4 @@ app.get('/', async (req, res) => {
   res.setHeader('Content-Type', 'image/svg+xml');
   res.send(svgString);
 });
-console.log("yo")
 app.listen(port, () => console.log(`Server listening on port ${port}`));

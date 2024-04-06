@@ -107,8 +107,7 @@
             function checkTextOverflow() {
                 var container = document.querySelector(".header");
                 var containerWidth = container.getBoundingClientRect().width;
-
-                console.log(containerWidth);
+                
                 if (containerWidth > 350) {
                     var fontSize = Math.floor(100 * (350/containerWidth)); // Adjust 10 according to your preference
                     container.style.fontSize = fontSize + "%";

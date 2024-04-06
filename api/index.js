@@ -258,5 +258,4 @@ app.get('/', async (req, res) => {
   res.setHeader('Content-Type', 'image/svg+xml');
   res.send(svgString);
 });
-console.log("yo2")
 app.listen(port, () => console.log(`Server listening on port ${port}`));
