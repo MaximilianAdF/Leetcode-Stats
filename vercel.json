@@ -8,8 +8,8 @@
     },
     "rewrites": [
         { 
-        "source": "/", 
-        "destination": "https://github.com/anuraghazra/leetcode-stats"
+        "source": "/(.*)", 
+        "destination": "/api"
         }
     ] 
 }
