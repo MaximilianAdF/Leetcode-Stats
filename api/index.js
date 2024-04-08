@@ -45,7 +45,7 @@ app.get('/', async (req, res) => {
 
   // Logic to generate SVG content dynamically based on username
   const svgString = `
-    <svg width="410" height="186" viewBox="0 0 410 186" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+    <svg width="410" height="186" viewBox="0 0 410 186" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
     <title id="titleId">${username}'s Solved Problems Stats</title>
     <desc id="descId"/>
     
@@ -111,11 +111,6 @@ app.get('/', async (req, res) => {
 
         .bold {
             font-weight: 700;
-        }
-
-        .icon {
-            fill: #4c71f2;
-            display: none;
         }
 
         .solved-circle-rim {
@@ -208,14 +203,18 @@ app.get('/', async (req, res) => {
             }
         }
     </style>
-    
-    <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="#151515" stroke-opacity="1" href="https://leetcode.com/${username}/"/>
+
+    <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="#151515" stroke-opacity="1"/>
     <g data-testid="card-title" transform="translate(25, 35)">
         <g transform="translate(0, 0)">z
             <text class="header" x="0" y="0" data-testid="header">${username}'s LeetCode Stats</text>
         </g>
     </g>
     <g data-testid="main-card-body" transform="translate(0,55)">
+          <a href="https://leetcode.com/${username}" target="_blank" transform="translate(0, 0)">
+            <image x="0" y="100" width="30" height="30" xlink:href="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png"/>
+          </a>
+
           <circle class="solved-circle" cx="90" cy="55" r="60"/>
           <circle class="solved-circle-rim" cx="90" cy="55" r="60"/>
           <text x="90" y="55" id="total-solved" class="total-solved text1 not_bold" text-anchor="middle" alignment-baseline="middle">${solvedCount}</text>
