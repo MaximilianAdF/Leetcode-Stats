@@ -45,8 +45,8 @@ app.get('/', async (req, res) => {
 
   // Logic to generate SVG content dynamically based on username
   const svgString = `
-    <svg width="410" height="186" viewBox="0 0 410 186" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" href="https://leetcode.com/${username}/">
-    <title id="titleId">User's Solved Problems, Rank: UserRank</title>
+    <svg width="410" height="186" viewBox="0 0 410 186" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+    <title id="titleId">${username}'s Solved Problems Stats</title>
     <desc id="descId"/>
     
     <style>
@@ -209,9 +209,9 @@ app.get('/', async (req, res) => {
         }
     </style>
     
-    <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="#151515" stroke-opacity="1"/>
+    <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="#151515" stroke-opacity="1" href="https://leetcode.com/${username}/"/>
     <g data-testid="card-title" transform="translate(25, 35)">
-        <g transform="translate(0, 0)">
+        <g transform="translate(0, 0)">z
             <text class="header" x="0" y="0" data-testid="header">${username}'s LeetCode Stats</text>
         </g>
     </g>
