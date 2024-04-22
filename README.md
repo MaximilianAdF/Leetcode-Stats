@@ -8,10 +8,13 @@
 <p align="center" dir="auto>
   
   [![Powered by Vercel](https://raw.githubusercontent.com/abumalick/powered-by-vercel/master/powered-by-vercel.svg)](https://vercel.com?utm_source=powered-by-vercel)
-  
+
 </p>
 <br>
 <br>
 <br>
 
-<h2 align="center" tabindex="-1" class="heading-element" dir="auto">Important Prerequisites</h2>
+## Important Prerequisites
+
+ > [!WARNING]
+ > This plugin is not affiliated, associated, authorized, endorsed by, or in any way officially connected with LeetCode. All product and company names are trademarks™ or registered® trademarks of their respective holders.
