@@ -1,11 +1,21 @@
+const fetchUserProfile = require('./fetch_profile');
 const fetchProblemsData = require('./fetch_problems');
 const express = require('express');
+const path = require('path');
 const app = express();
 const port = 3000;
 
 
+const formatNumber = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  };
+  
+// Serve static files from the misc directory
+app.use('/misc', express.static(path.join(__dirname, 'misc')));
+
 app.get('/', async (req, res) => {
   const username = req.query.username || 'Makimi';
+  const showRank = req.query.ranking === 'true';
   var solvedPercentage = 0;
   var solvedCount = 0;
 
@@ -20,6 +30,8 @@ app.get('/', async (req, res) => {
   var beatsEasy = 0;
   var beatsMedium = 0;
   var beatsHard = 0;
+
+  var userProfile = null;
 
   try {
     const data = await fetchProblemsData(username);
@@ -41,6 +53,13 @@ app.get('/', async (req, res) => {
 
   } catch (error) {
     console.error(error);
+  }
+
+  if(showRank) {
+    userProfile = await fetchUserProfile(username);
+    if (!userProfile) {
+        console.error('Error fetching profile');
+    }
   }
 
   // Logic to generate SVG content dynamically based on username
@@ -206,13 +225,15 @@ app.get('/', async (req, res) => {
 
     <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2" width="409" fill="#151515" stroke-opacity="1"/>
     <g data-testid="card-title" transform="translate(25, 35)">
-        <g transform="translate(0, 0)">z
+        <g transform="translate(0, 0)">
             <text class="header" x="0" y="0" data-testid="header">${username}'s LeetCode Stats</text>
+            ${showRank ? `<text class="stat-dark" x="365" text-anchor="end"><tspan fill="#FB9719">#</tspan> ${formatNumber(userProfile.ranking) || 'N/A'}</text>` : ''} <!-- Add ranking if parameter is true -->
         </g>
     </g>
+
     <g data-testid="main-card-body" transform="translate(0,55)">
           <a href="https://leetcode.com/${username}" target="_blank" transform="translate(0, 0)">
-            <image x="0" y="100" width="30" height="30" xlink:href="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png"/>
+            <image href="./misc/leetcode_logo.webp" x="1" y="95" width="30" height="30" />
           </a>
 
           <circle class="solved-circle" cx="90" cy="55" r="60"/>
@@ -244,7 +265,7 @@ app.get('/', async (req, res) => {
                 <rect class="hard-bar" x="170" y="100" width="220" height="8" rx="4" ry="4"/>
                 <rect class="hard-fill" x="170" y="100" width="${Math.max(220 * (solvedHard/totalHard),4)}" height="8" rx="4" ry="4"/>
           </g> 
-    </g>      
+    </g>
     </svg>
   `;
 

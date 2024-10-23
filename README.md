@@ -41,9 +41,13 @@
 <br>
 
 - ### Fetch your showcase
-    _Modify the below URL with your LeetCode username and store the URL on your clipboard_
+    _Modify the below URL with your LeetCode username & parameters then store the URL to your clipboard_
     ```
     https://leetcode-stats-inky.vercel.app/?username=YOUR_USERNAME
+    ```
+    _Display ranking of your LeetCode profile_
+    ```
+    https://leetcode-stats-inky.vercel.app/?username=YOUR_USERNAME&ranking=true
     ```
 
 <br>
@@ -53,7 +57,7 @@
 - ### Set-up on your GitHub profile
     _In your README.md repository, copy paste the following segment with your specific URL_
     ```
-    ![](https://leetcode-stats-inky.vercel.app/?username=YOUR_USERNAME)
+    ![](YOUR_URL)
     ```
    
 
