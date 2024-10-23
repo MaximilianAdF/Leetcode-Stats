@@ -35,9 +35,9 @@ app.get('/', async (req, res) => {
     solvedMedium = data.submitStatsGlobal[2].count;
     solvedHard = data.submitStatsGlobal[3].count;
 
-    beatsEasy = data.problemsSolvedBeatsStats[0].percentage;
-    beatsMedium = data.problemsSolvedBeatsStats[1].percentage;
-    beatsHard = data.problemsSolvedBeatsStats[2].percentage;
+    beatsEasy = data.problemsSolvedBeatsStats[0].percentage.toFixed(1);
+    beatsMedium = data.problemsSolvedBeatsStats[1].percentage.toFixed(1);
+    beatsHard = data.problemsSolvedBeatsStats[2].percentage.toFixed(1);
 
   } catch (error) {
     console.error(error);
